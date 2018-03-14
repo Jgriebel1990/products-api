@@ -1,20 +1,20 @@
 const products = [
     {
-        _id: 'udhuiahrguhwgiufawiugfhq34hg98yt',
+        _id: '1',
         name: 'Javelin (caution)',
         price: 500,
         imgSrc: 'https://via.placeholder.com/100x100',
         created: new Date()
     },
     {
-        _id: 'yfguiugyhbjntyfgvbhugyfvg',
+        _id: '2',
         name: 'Snail',
         price: 3.99,
         imgSrc: 'https://via.placeholder.com/100x100',
         created: new Date()
     },
     {
-        _id: 'ur9guhiuhfuhiruhwiuehwiuehf',
+        _id: '3',
         name: 'Rug',
         price: 99.99,
         imgSrc: 'https://via.placeholder.com/100x100',
