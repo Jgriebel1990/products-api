@@ -25,7 +25,7 @@ router.get("/products", (req, res) => {
     .exec()
     .then(allProducts => {
       res.status(200).json({
-        products: (allProducts)
+products: allProducts
       });
     })
     .catch(err => {
@@ -37,14 +37,23 @@ router.get("/products", (req, res) => {
 
 router.get("/products/:id", (req, res) => {
   const { id } = req.params;
-  const productsObject = productArrToObj(mockProducts); //this will get deleted
-  const selectedProducts = productsObject[id];
-  res.status(200).json({
-    products: {
-      [id]: selectedProducts
-    }
-  });
-});
+  Product.findById(id)
+    .exec()
+    .then(selectedProduct => {
+        const selectedId = selectedProduct._id;
+        const copy = {...selectedProduct._doc};
+        delete copy._id;
+      res.status(200).json({
+        products: {
+          [selectedId]: copy
+        }
+      });
+    })
+    .catch(err => {
+        res.status(500).json({
+            msg: 'Something went wrong'
+        })
+    });});
 //post means create
 router.post("/products", (req, res) => {
   const product = new Product({
