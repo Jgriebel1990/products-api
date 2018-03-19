@@ -5,7 +5,8 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 //middleware imports
-const logger = require('./middlewares/logger');
+const logger = require("./middlewares/logger");
+const notFound = require('./middlewares/404');
 mongoose.connect(process.env.MONGO_URI);
 const PORT = process.env.PORT || 5000; //necessary for Heroku deployment
 
@@ -15,16 +16,13 @@ const productRouter = require("./routers/products");
 serverApp.use(logger);
 serverApp.use(productRouter); //register the router with the application
 
-
 serverApp.get("/", (req, res) => {
   res.send(
     "i want some food maybe a fish taco or sandwich i also really want to eat this poptart"
   );
 });
 
-serverApp.use(function notFoundHandler(req, res, next){
-  res.status(404).send('Lions, tigers, and bears! oh my! Nothing to see hererererer')
-})
+serverApp.use(notFound);
 
 serverApp.listen(PORT, () => {
   console.log(`Now listening on port ${PORT}`);
