@@ -25,7 +25,7 @@ router.get("/products", (req, res) => {
     .exec()
     .then(allProducts => {
       res.status(200).json({
-products: allProducts
+  products: allProducts
       });
     })
     .catch(err => {
@@ -75,4 +75,12 @@ router.post("/products", (req, res) => {
     });
 });
 
+//update(PUT)
+router.put('/products/:id', (req, res) => {
+  res.send('Updating now');
+});
+//delete(DELETE)
+router.delete('/products/:id', (req, res) => {
+  res.send('Deleting something right now.');
+});
 module.exports = router; //like export default
