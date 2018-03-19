@@ -77,7 +77,21 @@ router.post("/products", (req, res) => {
 
 //update(PUT)
 router.put('/products/:id', (req, res) => {
-  res.send('Updating now');
+  const { id } = req.params;
+  const update = {
+    name: 'update name'
+  };
+  Product.findByIdAndUpdate(id, update)
+          .then(respone => {
+            res.status(200).json({
+              msg: 'update complete'
+            });
+          })
+          .catch(err => {
+            res.status(500).json({
+              msg: 'Something went wrong'
+            });
+          });
 });
 //delete(DELETE)
 router.delete('/products/:id', (req, res) => {
