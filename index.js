@@ -22,6 +22,10 @@ serverApp.get("/", (req, res) => {
   );
 });
 
+serverApp.use(function notFoundHandler(req, res, next){
+  res.status(404).send('Lions, tigers, and bears! oh my! Nothing to see hererererer')
+})
+
 serverApp.listen(PORT, () => {
   console.log(`Now listening on port ${PORT}`);
 });
