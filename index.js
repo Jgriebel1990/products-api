@@ -7,6 +7,7 @@ require("dotenv").config();
 //middleware imports
 const logger = require("./middlewares/logger");
 const notFound = require('./middlewares/404');
+const serverError = require('./middlewares/serverError')
 mongoose.connect(process.env.MONGO_URI);
 const PORT = process.env.PORT || 5000; //necessary for Heroku deployment
 
@@ -23,11 +24,7 @@ serverApp.get("/", (req, res) => {
 });
 
 serverApp.use(notFound);
-serverApp.use(function serverErrorHandler(err, req, res, next){
-  res.status(500).json({
-    msg: 'something done brakes'
-  })
-});
+serverApp.use(serverError);
 
 serverApp.listen(PORT, () => {
   console.log(`Now listening on port ${PORT}`);
