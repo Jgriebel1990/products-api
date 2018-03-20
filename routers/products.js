@@ -20,42 +20,35 @@ const productArrToObj = arrayOfProducts => {
   //return accumulator
   return accumulator;
 };
-router.get("/products", (req, res) => {
+router.get("/products", (req, res, next) => {
   Product.find()
     .exec()
     .then(allProducts => {
       res.status(200).json({
-  products: allProducts
+        products: allProducts
       });
     })
-    .catch(err => {
-      res.status(500).json({
-        msg: "Something went wrong"
-      });
-    });
+    .catch(next);
 });
 
-router.get("/products/:id", (req, res) => {
+router.get("/products/:id", (req, res, next) => {
   const { id } = req.params;
   Product.findById(id)
     .exec()
     .then(selectedProduct => {
-        const selectedId = selectedProduct._id;
-        const copy = {...selectedProduct._doc};
-        delete copy._id;
+      const selectedId = selectedProduct._id;
+      const copy = { ...selectedProduct._doc };
+      delete copy._id;
       res.status(200).json({
         products: {
           [selectedId]: copy
         }
       });
     })
-    .catch(err => {
-        res.status(500).json({
-            msg: 'Something went wrong'
-        })
-    });});
+    .catch(next);
+});
 //post means create
-router.post("/products", (req, res) => {
+router.post("/products", (req, res, next) => {
   const product = new Product({
     name: "something new",
     price: 1000,
@@ -68,44 +61,32 @@ router.post("/products", (req, res) => {
         msg: "successfully created product"
       });
     })
-    .catch(err => {
-      res.status(500).json({
-        msg: "Something went wrong"
-      });
-    });
+    .catch(next);
 });
 
 //update(PUT)
-router.put('/products/:id', (req, res) => {
+router.put("/products/:id", (req, res, next) => {
   const { id } = req.params;
   const update = {
-    name: 'update name'
+    name: "update name"
   };
   Product.findByIdAndUpdate(id, update)
-          .then(respone => {
-            res.status(200).json({
-              msg: 'update complete'
-            });
-          })
-          .catch(err => {
-            res.status(500).json({
-              msg: 'Something went wrong'
-            });
-          });
+    .then(respone => {
+      res.status(200).json({
+        msg: "update complete"
+      });
+    })
+    .catch(next);
 });
 //delete(DELETE)
-router.delete('/products/:id', (req, res) => {
+router.delete("/products/:id", (req, res, next) => {
   const { id } = req.params;
   Product.findByIdAndRemove(id)
-          .then(response => {
-            res.status(200).json({
-              msg: 'Successfully deleted'
-            });
-          })
-          .catch(err => {
-            res.status(500).json({
-              msg: 'Something went wrong'
-            });
-          });
+    .then(response => {
+      res.status(200).json({
+        msg: "Successfully deleted"
+      });
+    })
+    .catch(next);
 });
 module.exports = router; //like export default
