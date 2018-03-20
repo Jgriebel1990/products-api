@@ -49,10 +49,15 @@ router.get("/products/:id", (req, res, next) => {
 });
 //post means create
 router.post("/products", (req, res, next) => {
+  if(!req.body.name || req.body.name == '') {
+    next({
+      msg: "bad request"
+    });
+  }
   const product = new Product({
-    name: "something new",
-    price: 1000,
-    imgSrc: "https://via.placeholder.com/100x100"
+    name: req.body.name,
+    imgSrc: req.body.imgSrc,
+    price: req.body.price
   });
   product
     .save()
